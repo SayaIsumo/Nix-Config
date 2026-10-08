@@ -177,5 +177,7 @@
 
   hardware.xpadneo.enable = true; # Bluetooth
 
+  programs.steam.protontricks.enable = true;
+
   system.stateVersion = "26.05";
 }
