@@ -16,9 +16,8 @@
   home.packages = with pkgs; [
     claude-code
     mangohud
-    firefox
     lazygit
-    bottles
+    ungoogled-chromium
     curl
     wget
     sshfs
