@@ -24,6 +24,9 @@
           modules = [
             ./configuration.nix
             {
+              environment.systemPackages = [
+                claude-desktop-nix.packages.x86_64-linux.default
+              ];
               environment.etc."nix/inputs/nixpkgs".source = nixpkgs.outPath;
               nix.settings.nix-path = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
               nix.registry.nixpkgs.flake = nixpkgs;
