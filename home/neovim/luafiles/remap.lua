@@ -43,8 +43,14 @@ vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
 vim.keymap.set("n", "<leader>fg", builtin.git_files, {})
 vim.keymap.set("n", "<leader>fc", builtin.grep_string, {})
 
--- copilot
-vim.keymap.set("i", "<C-J>", 'copilot#Accept("")', { silent = true, expr = true, replace_keycodes = false })
+-- claude
+vim.keymap.set("n", "<leader>ac", "<cmd>ClaudeCode<CR>", { desc = "Toggle Claude" })
+vim.keymap.set("n", "<leader>af", "<cmd>ClaudeCodeFocus<CR>", { desc = "Focus Claude" })
+vim.keymap.set("n", "<leader>ar", "<cmd>ClaudeCode --resume<CR>", { desc = "Resume Claude" })
+vim.keymap.set("n", "<leader>ab", "<cmd>ClaudeCodeAdd %<CR>", { desc = "Add current buffer to Claude" })
+vim.keymap.set("v", "<leader>as", "<cmd>ClaudeCodeSend<CR>", { desc = "Send selection to Claude" })
+vim.keymap.set("n", "<leader>aa", "<cmd>ClaudeCodeDiffAccept<CR>", { desc = "Accept Claude diff" })
+vim.keymap.set("n", "<leader>ad", "<cmd>ClaudeCodeDiffDeny<CR>", { desc = "Deny Claude diff" })
 
 -- lazygit
 vim.keymap.set("n", "<leader>gl", ":LazyGit<CR>")

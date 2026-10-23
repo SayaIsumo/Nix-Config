@@ -18,7 +18,7 @@ in
       concatFiles [
         ./luafiles/set.lua
         ./luafiles/remap.lua
-        ./luafiles/copilot.lua
+        ./luafiles/claude.lua
       ]
     );
     plugins = with pkgs.vimPlugins; [
@@ -145,7 +145,7 @@ in
         type = "lua";
         config = "require('dashboard').setup {}";
       }
-      copilot-vim
+      claudecode-nvim
       # completion plugin setup
       cmp-nvim-lsp
       cmp-buffer
