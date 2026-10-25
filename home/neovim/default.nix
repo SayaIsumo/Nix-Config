@@ -14,6 +14,37 @@ in
     vimAlias = true;
     vimdiffAlias = true;
     withNodeJs = true;
+    # binaries used by the LSP / none-ls / treesitter config, only on nvim's PATH
+    extraPackages = with pkgs; [
+      # LSP servers
+      clang-tools
+      pyright
+      lua-language-server
+      typescript-language-server
+      typescript
+      vscode-langservers-extracted
+      gopls
+      nil
+      metals
+      tailwindcss-language-server
+      rust-analyzer
+      # formatters
+      prettier
+      black
+      stylua
+      shfmt
+      gofumpt
+      nixfmt
+      # linters
+      eslint_d
+      ruff
+      golangci-lint
+      pylint
+      # treesitter / telescope
+      tree-sitter
+      fd
+      ripgrep
+    ];
     initLua = (
       concatFiles [
         ./luafiles/set.lua
