@@ -30,7 +30,7 @@
       bind -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "pbcopy"
 
 
-      set-option -g focus-event on
+      set-option -g focus-events on
       set-option -sa terminal-features ",xterm-kitty:RGB"
     '';
     plugins = with pkgs.tmuxPlugins; [
