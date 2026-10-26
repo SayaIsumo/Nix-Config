@@ -27,7 +27,7 @@
     heroic
     obsidian
     bat
-    karere
+    whatsie
     protonup-qt
     ani-cli
     btop
