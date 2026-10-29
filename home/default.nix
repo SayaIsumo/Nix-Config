@@ -9,12 +9,12 @@
     ./kitty
     ./zsh
     ./git
+    ./gpg
   ];
 
   home.username = "saya";
   home.homeDirectory = "/home/saya";
   home.packages = with pkgs; [
-    ggp
     claude-code
     mangohud
     lazygit
