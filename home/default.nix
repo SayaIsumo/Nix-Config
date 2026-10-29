@@ -10,6 +10,7 @@
     ./zsh
     ./git
     ./gpg
+    ./claude-desktop
   ];
 
   home.username = "saya";
