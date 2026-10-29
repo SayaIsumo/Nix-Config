@@ -19,6 +19,7 @@
     mangohud
     lazygit
     ungoogled-chromium
+    obsidian
     curl
     wget
     sshfs
