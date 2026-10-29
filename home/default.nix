@@ -25,7 +25,6 @@
     nil
     nixfmt
     ripgrep
-    obsidian
     bat
     whatsie
     protonup-qt
