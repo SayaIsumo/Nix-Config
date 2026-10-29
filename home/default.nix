@@ -14,6 +14,7 @@
   home.username = "saya";
   home.homeDirectory = "/home/saya";
   home.packages = with pkgs; [
+    ggp
     claude-code
     mangohud
     lazygit
@@ -24,7 +25,6 @@
     nil
     nixfmt
     ripgrep
-    heroic
     obsidian
     bat
     whatsie
