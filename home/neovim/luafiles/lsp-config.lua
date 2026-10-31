@@ -74,4 +74,5 @@ vim.lsp.enable({
 	"nil_ls",
 	"metals",
 	"tailwindcss",
+	"roslyn_ls",
 })
