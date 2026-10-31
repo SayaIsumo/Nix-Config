@@ -43,6 +43,7 @@
     discord
     gimp
     rawtherapee
+    wowup-cf
   ];
 
   home.file = {
