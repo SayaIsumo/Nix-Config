@@ -14,6 +14,7 @@ null_ls.setup({
 		formatting.shfmt,
 		formatting.gofumpt,
 		formatting.nixfmt,
+		formatting.csharpier,
 
 		-- moved out of none-ls core into none-ls-extras
 		require("none-ls.diagnostics.eslint_d"),

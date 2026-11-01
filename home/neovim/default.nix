@@ -28,6 +28,7 @@ in
       metals
       tailwindcss-language-server
       rust-analyzer
+      roslyn-ls
       # formatters
       prettier
       black
@@ -35,6 +36,7 @@ in
       shfmt
       gofumpt
       nixfmt
+      csharpier
       # linters
       eslint_d
       ruff
@@ -96,6 +98,7 @@ in
               tree-sitter-markdown
               tree-sitter-markdown-inline
               tree-sitter-nix
+              tree-sitter-c-sharp
             ]
           )
         );
