@@ -16,6 +16,7 @@
   home.username = "saya";
   home.homeDirectory = "/home/saya";
   home.packages = with pkgs; [
+    vesktop
     claude-code
     mangohud
     lazygit
