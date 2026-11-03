@@ -33,7 +33,7 @@
     ani-cli
     btop
     mpv
-    gnome-secrets
+    keepassxc
     spotify
     libreoffice
     hyfetch
@@ -41,7 +41,6 @@
     rar
     unzip
     helvum
-    discord
     gimp
     rawtherapee
     wowup-cf

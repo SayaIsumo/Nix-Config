@@ -38,6 +38,8 @@
     XDG_CONFIG_HOME = "$HOME/.config";
     XDG_DATA_HOME = "$HOME/.local/share";
     XDG_STATE_HOME = "$HOME/.local/state";
+    # run Electron/Chromium apps natively on Wayland
+    NIXOS_OZONE_WL = "1";
   };
 
   # Bootloader.
@@ -75,11 +77,14 @@
   # dbus and portal
   services.dbus.enable = true;
 
-  # Enable the GNOME Desktop Environment.
-
-  services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
-  services.gnome.gnome-keyring.enable = true;
+  # Enable the KDE Plasma 6 Desktop Environment.
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
+  };
+  services.desktopManager.plasma6.enable = true;
+  # "plasma" is the Wayland session ("plasmax11" would be X11)
+  services.displayManager.defaultSession = "plasma";
 
   # flatpaks
   services.flatpak.enable = true;
