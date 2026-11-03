@@ -188,5 +188,8 @@
 
   programs.steam.protontricks.enable = true;
 
+  programs.appimage.enable = true;
+  programs.appimage.binfmt = true;
+
   system.stateVersion = "26.05";
 }
