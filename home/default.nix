@@ -40,6 +40,7 @@
     zip
     rar
     unzip
+    p7zip
     helvum
     gimp
     rawtherapee
