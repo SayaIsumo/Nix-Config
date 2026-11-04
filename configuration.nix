@@ -102,6 +102,20 @@
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.samsung-unified-linux-driver ];
 
+  # The driver's PPD hardcodes its Nix store path, so a queue added by hand breaks
+  # once that path is garbage collected. Declaring it lets NixOS regenerate the PPD.
+  hardware.printers.ensurePrinters = [
+    {
+      name = "Samsung-CLP-360";
+      deviceUri = "socket://192.168.178.8:9100";
+      model = "samsung/CLP-360.ppd";
+      ppdOptions = {
+        PageSize = "A4";
+        ColorModel = "Gray";
+      };
+    }
+  ];
+
   # enable locate
   services.locate = {
     enable = true;
