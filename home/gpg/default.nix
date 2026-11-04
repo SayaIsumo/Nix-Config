@@ -5,6 +5,6 @@
   services.gpg-agent = {
     enable = true;
     enableZshIntegration = true;
-    pinentry.package = pkgs.pinentry-qt;
+    pinentry.package = pkgs.pinentry-gnome3;
   };
 }

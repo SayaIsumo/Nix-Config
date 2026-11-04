@@ -33,7 +33,7 @@
     ani-cli
     btop
     mpv
-    keepassxc
+    gnome-secrets
     spotify
     libreoffice
     hyfetch

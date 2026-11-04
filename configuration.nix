@@ -77,14 +77,11 @@
   # dbus and portal
   services.dbus.enable = true;
 
-  # Enable the KDE Plasma 6 Desktop Environment.
-  services.displayManager.sddm = {
-    enable = true;
-    wayland.enable = true;
-  };
-  services.desktopManager.plasma6.enable = true;
-  # "plasma" is the Wayland session ("plasmax11" would be X11)
-  services.displayManager.defaultSession = "plasma";
+  # Enable the GNOME Desktop Environment.
+
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
+  services.gnome.gnome-keyring.enable = true;
 
   # flatpaks
   services.flatpak.enable = true;
