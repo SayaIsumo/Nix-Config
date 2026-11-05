@@ -45,6 +45,7 @@
     gimp
     rawtherapee
     wowup-cf
+    faugus-launcher
   ];
 
   home.file = {
