@@ -34,7 +34,6 @@
     btop
     mpv
     gnome-secrets
-    spotify
     libreoffice
     hyfetch
     zip

@@ -137,7 +137,6 @@
       #bluetooth,
       #custom-hyprPicker,
       #custom-power-menu,
-      #custom-spotify,
       #custom-weather,
       #custom-weather.severe,
       #custom-weather.sunnyDay,
@@ -298,10 +297,6 @@
         background-color: #66cc99;
         color: #2a5c45;
         min-width: 100px;
-      }
-
-      #custom-media.custom-spotify {
-        background-color: #66cc99;
       }
 
       #custom-media.custom-vlc {
