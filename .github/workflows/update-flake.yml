@@ -1,0 +1,30 @@
+name: Update flake.lock
+
+on:
+  schedule:
+    - cron: "0 4 * * 1" # Mondays at 04:00 UTC
+  workflow_dispatch:
+
+permissions:
+  actions: write # start the build workflow
+  contents: write # push the update branch
+  pull-requests: write # open the PR
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: cachix/install-nix-action@v31
+
+      - name: Update flake.lock and open a PR
+        id: update
+        uses: DeterminateSystems/update-flake-lock@v29
+
+      # PRs opened with GITHUB_TOKEN don't trigger pull_request workflows,
+      # but workflow_dispatch does work, so start the build explicitly.
+      - name: Build the update branch
+        if: steps.update.outputs.pull-request-number != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run build.yml --repo "$GITHUB_REPOSITORY" --ref update_flake_lock_action

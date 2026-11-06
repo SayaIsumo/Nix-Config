@@ -1,0 +1,26 @@
+name: Build NixOS system
+
+on:
+  pull_request:
+    paths-ignore:
+      - "README.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Must run before Nix is installed, as it sets up /nix on the freed space.
+      - uses: wimpysworld/nothing-but-nix@v11
+      - uses: actions/checkout@v7
+      - uses: cachix/install-nix-action@v31
+
+      - name: Build system
+        run: nix build .#nixosConfigurations.nixos.config.system.build.toplevel --print-build-logs
