@@ -28,3 +28,15 @@ jobs:
 
       - name: Build system
         run: nix build .#nixosConfigurations.nixos.config.system.build.toplevel --print-build-logs
+
+      # Informational only: a broken main shouldn't fail this branch's build.
+      - name: Show package changes compared to main
+        continue-on-error: true
+        run: |
+          nix build "github:$GITHUB_REPOSITORY/main#nixosConfigurations.nixos.config.system.build.toplevel" --out-link base
+          {
+            echo '### Package changes compared to main'
+            echo '```'
+            nix run nixpkgs#nvd -- --color never diff ./base ./result
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
