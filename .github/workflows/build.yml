@@ -18,9 +18,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Must run before Nix is installed, as it sets up /nix on the freed space.
-      - uses: wimpysworld/nothing-but-nix@v11
+      # Pinned to main: v11 predates the installer fix (upstream issue #57).
+      - uses: wimpysworld/nothing-but-nix@60cdb933914c3413bfc222f3a083880296cc3c95
       - uses: actions/checkout@v7
       - uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            build-dir = /nix/build
 
       - name: Build system
         run: nix build .#nixosConfigurations.nixos.config.system.build.toplevel --print-build-logs
