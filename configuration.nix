@@ -137,6 +137,34 @@
         "module.x11.bell" = false;
       };
     };
+    # WebRTC echo cancellation: adds "Echo-Cancel Source/Sink" virtual devices
+    extraConfig.pipewire."60-echo-cancel" = {
+      "context.modules" = [
+        {
+          name = "libpipewire-module-echo-cancel";
+          args = {
+            "library.name" = "aec/libspa-aec-webrtc";
+            "node.latency" = "1024/48000";
+            "capture.props" = {
+              "node.name" = "capture.echo_cancel";
+              "node.passive" = true;
+            };
+            "source.props" = {
+              "node.name" = "echo_cancel_source";
+              "node.description" = "Echo-Cancel Source";
+            };
+            "sink.props" = {
+              "node.name" = "echo_cancel_sink";
+              "node.description" = "Echo-Cancel Sink";
+            };
+            "playback.props" = {
+              "node.name" = "playback.echo_cancel";
+              "node.passive" = true;
+            };
+          };
+        }
+      ];
+    };
   };
 
   # enable zsh for user
