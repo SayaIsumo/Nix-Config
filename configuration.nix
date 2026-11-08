@@ -137,6 +137,30 @@
         "module.x11.bell" = false;
       };
     };
+    # WebRTC echo cancellation: adds an "Echo-Cancel Source" virtual mic.
+    # monitor.mode uses the default sink's monitor as the echo reference
+    # instead of a virtual sink, so app audio keeps going straight to the
+    # real output (a virtual default sink breaks Vesktop's screen-share audio).
+    extraConfig.pipewire."60-echo-cancel" = {
+      "context.modules" = [
+        {
+          name = "libpipewire-module-echo-cancel";
+          args = {
+            "library.name" = "aec/libspa-aec-webrtc";
+            "node.latency" = "1024/48000";
+            "monitor.mode" = true;
+            "capture.props" = {
+              "node.name" = "capture.echo_cancel";
+              "node.passive" = true;
+            };
+            "source.props" = {
+              "node.name" = "echo_cancel_source";
+              "node.description" = "Echo-Cancel Source";
+            };
+          };
+        }
+      ];
+    };
   };
 
   # enable zsh for user
