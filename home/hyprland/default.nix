@@ -11,8 +11,8 @@
     brightnessctl
     pamixer
     pavucontrol
-    swww
-    xfce.thunar
+    awww
+    thunar
     wl-clipboard
     cliphist
   ];
@@ -425,7 +425,7 @@
 
   qt = {
     enable = true;
-    platformTheme = "gtk";
+    platformTheme.name = "gtk3";
   };
 
   gtk = {
@@ -444,13 +444,13 @@
 
   home.file = {
     # hyprland stuff
-    ".config/hypr/hyprland.conf".source = ./configfiles/hypr/hyprland.conf;
-    ".config/hypr/mocha.conf".source = ./configfiles/hypr/mocha.conf;
+    ".config/hypr/hyprland.lua".source = ./configfiles/hypr/hyprland.lua;
+    ".config/hypr/mocha.lua".source = ./configfiles/hypr/mocha.lua;
 
     # hyprland scripts
     ".config/hypr/scripts/volume.sh".source = ./configfiles/hypr/scripts/volume.sh;
     ".config/hypr/scripts/brightness.sh".source = ./configfiles/hypr/scripts/brightness.sh;
-    ".config/hypr/scripts/swww.sh".source = ./configfiles/hypr/scripts/swww.sh;
+    ".config/hypr/scripts/wallpaper.sh".source = ./configfiles/hypr/scripts/wallpaper.sh;
 
     # waybar config
     ".config/waybar/config".source = ./configfiles/waybar/config;
