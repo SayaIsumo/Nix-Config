@@ -1,6 +1,6 @@
 {
     "layer": "top",
-    "height": 20, // Waybar height (to be removed for auto height)
+    "height": 24, // Waybar height (minimum the modules need)
     "margin-top": 3,
     "margin-left": 10,
     "margin-bottom": 0,
@@ -8,7 +8,7 @@
     "spacing": 5, // Gaps between modules (4px)
     "modules-left": [ "clock", "hyprland/workspaces" ],
     "modules-center": ["hyprland/window"],
-    "modules-right": ["tray", "backlight", "pulseaudio", "battery"],
+    "modules-right": ["tray", "pulseaudio"],
     "hyprland/workspaces": {
       "format": "{icon}",
       "format-icons": {
@@ -36,13 +36,6 @@
         "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
     },
 
-    "backlight": {
-        "device": "DP-1",
-        "format": "{icon} {percent}%",
-        "format-icons": ["", "", "", "", "", "", "", "", ""],
-        "on-click": "",
-    },
-
     "pulseaudio": {
         "format": "{icon} {volume}%",
         "format-bluetooth": "  {volume}%",
@@ -58,25 +51,4 @@
             "default": ["", "", ""]
         },
     },
-
-    "battery": {
-      "bat": "BAT0",
-      "adapter": "ADP0",
-      "interval": 60,
-      "states": {
-          "warning": 30,
-          "critical": 15
-      },
-      "on-click": "sh ~/.config/waybar/scripts/power-profiles", 
-      "max-length": 20,
-      "format": "{icon} {capacity}%",
-      "format-warning": "{icon} {capacity}%",
-      "format-critical": "{icon} {capacity}%",
-      "format-charging": "<span font-family='Font Awesome 6 Free'></span> {capacity}%",
-      "format-plugged": "  {capacity}%",
-      "format-alt": "{icon} {time}",
-      "format-full": "  {capacity}%",
-      "format-icons": [" ", " ", " ", " ", " "],
-    },
 }
-
