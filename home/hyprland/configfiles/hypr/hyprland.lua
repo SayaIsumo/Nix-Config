@@ -39,6 +39,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("bash " .. scripts .. "/wallpaper.sh")
     hl.exec_cmd("wl-paste --watch cliphist store")
     hl.exec_cmd("waybar")
+    hl.exec_cmd("blueman-applet")
 end)
 
 
@@ -165,6 +166,7 @@ bind("J",              hl.dsp.layout("togglesplit")) -- dwindle only
 bind("F",              hl.dsp.window.fullscreen())
 bind("L",              hl.dsp.exec_cmd("swaylock"))
 bind("SHIFT + L",      hl.dsp.exec_cmd("wlogout"))
+bind("N",              hl.dsp.exec_cmd("blueman-manager"))
 
 -- Move focus with mainMod + arrow keys
 bind("left",  hl.dsp.focus({ direction = "left" }))

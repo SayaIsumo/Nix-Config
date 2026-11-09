@@ -123,6 +123,9 @@
     interval = "hourly";
   };
 
+  # Bluetooth manager (GUI + tray applet) for non-GNOME sessions
+  services.blueman.enable = true;
+
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
