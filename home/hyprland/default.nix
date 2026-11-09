@@ -439,7 +439,8 @@
   gtk = {
     enable = true;
     theme = {
-      name = "Catppuccin Mocha Lavender";
+      # must match the directory the package installs under share/themes
+      name = "catppuccin-mocha-lavender-standard";
       package = pkgs.catppuccin-gtk.override {
         accents = [ "lavender" ];
         size = "standard";
