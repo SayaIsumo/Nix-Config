@@ -12,10 +12,18 @@
     pamixer
     pavucontrol
     awww
-    thunar
     wl-clipboard
     cliphist
+    # replacements for the GNOME apps
+    xarchiver # archive manager (File Roller), used by Thunar's archive plugin
+    qalculate-gtk # calculator (Calculator)
+    gparted # partitioning (Disks)
+    networkmanagerapplet # network tray + connection editor (Settings > Network)
+    nwg-look # GTK theme/font/icon settings (Settings > Appearance)
   ];
+
+  # polkit authentication agent (GNOME Shell used to provide one)
+  services.hyprpolkitagent.enable = true;
   programs.swaylock = {
     enable = true;
     package = pkgs.swaylock-effects;

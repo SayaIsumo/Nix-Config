@@ -71,25 +71,43 @@
     LC_TIME = "de_DE.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
   # dbus and portal
   services.dbus.enable = true;
 
-  # Enable the GNOME Desktop Environment.
+  # Hyprland session
+  programs.hyprland.enable = true;
 
-  services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
+  # Login screen: greetd with the tuigreet TUI, launching Hyprland
+  services.greetd = {
+    enable = true;
+    settings.default_session = {
+      command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --asterisks --cmd start-hyprland";
+      user = "greeter";
+    };
+  };
+
+  # Keyring (secrets for Evolution, Chromium, etc.), unlocked at login via greetd
   services.gnome.gnome-keyring.enable = true;
+  security.pam.services.greetd.enableGnomeKeyring = true;
+  programs.seahorse.enable = true;
+
+  # File manager with archive/removable-media plugins; gvfs for trash, mounts
+  # and network shares, tumbler for thumbnails, udisks2 for mounting drives
+  programs.thunar = {
+    enable = true;
+    plugins = with pkgs; [
+      thunar-archive-plugin
+      thunar-volman
+    ];
+  };
+  services.gvfs.enable = true;
+  services.tumbler.enable = true;
+  services.udisks2.enable = true;
 
   # flatpaks
   services.flatpak.enable = true;
 
-  # or enable Hyprland
-  programs.hyprland.enable = true;
-
-  # Configure keymap in X11
+  # Keymap (Hyprland sets its own in hyprland.lua; this covers XWayland)
   services.xserver.xkb = {
     layout = "de";
     variant = "nodeadkeys";
@@ -222,7 +240,11 @@
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
   };
 
-  xdg.portal.enable = true;
+  # Hyprland's portal handles screencast/screenshots; the GTK one provides file pickers
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
 
   hardware.steam-hardware.enable = true;
   hardware.uinput.enable = true;
