@@ -34,7 +34,7 @@
     ani-cli
     btop
     mpv
-    gnome-secrets
+    keepassxc
     libreoffice
     hyfetch
     zip

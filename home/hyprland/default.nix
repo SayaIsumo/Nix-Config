@@ -12,10 +12,18 @@
     pamixer
     pavucontrol
     awww
-    thunar
     wl-clipboard
     cliphist
+    # replacements for the GNOME apps
+    xarchiver # archive manager (File Roller), used by Thunar's archive plugin
+    qalculate-gtk # calculator (Calculator)
+    gparted # partitioning (Disks)
+    networkmanagerapplet # network tray + connection editor (Settings > Network)
+    nwg-look # GTK theme/font/icon settings (Settings > Appearance)
   ];
+
+  # polkit authentication agent (GNOME Shell used to provide one)
+  services.hyprpolkitagent.enable = true;
   programs.swaylock = {
     enable = true;
     package = pkgs.swaylock-effects;
@@ -431,11 +439,20 @@
   gtk = {
     enable = true;
     theme = {
-      name = "Catppuccin Mocha Lavender";
+      # must match the directory the package installs under share/themes
+      name = "catppuccin-mocha-lavender-standard";
       package = pkgs.catppuccin-gtk.override {
         accents = [ "lavender" ];
         size = "standard";
         variant = "mocha";
+      };
+    };
+    # Papirus icons with Catppuccin-coloured folders (Thunar and other GTK apps)
+    iconTheme = {
+      name = "Papirus-Dark";
+      package = pkgs.catppuccin-papirus-folders.override {
+        flavor = "mocha";
+        accent = "lavender";
       };
     };
   };
