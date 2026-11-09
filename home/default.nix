@@ -36,7 +36,7 @@
     mpv
     keepassxc
     libreoffice
-    hyfetch
+    fastfetch
     zip
     rar
     unzip
