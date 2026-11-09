@@ -440,6 +440,16 @@
     };
   };
 
+  # cursor theme for GTK/X11 apps; Hyprland picks it up via XCURSOR_THEME in hyprland.lua
+  home.pointerCursor = {
+    enable = true;
+    package = pkgs.catppuccin-cursors.mochaLavender;
+    name = "catppuccin-mocha-lavender-cursors";
+    size = 24;
+    gtk.enable = true;
+    x11.enable = true;
+  };
+
   programs.wofi.enable = true;
 
   home.file = {
