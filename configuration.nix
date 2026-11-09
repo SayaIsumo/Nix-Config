@@ -96,7 +96,14 @@
   programs.thunar = {
     enable = true;
     plugins = with pkgs; [
-      thunar-archive-plugin
+      # the plugin only looks for archive-manager scripts in its own libexec,
+      # so copy in the one xarchiver ships
+      (thunar-archive-plugin.overrideAttrs (old: {
+        postInstall = (old.postInstall or "") + ''
+          cp ${xarchiver}/libexec/thunar-archive-plugin/xarchiver.tap \
+            $out/libexec/thunar-archive-plugin/
+        '';
+      }))
       thunar-volman
     ];
   };
