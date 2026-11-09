@@ -8,7 +8,7 @@
     "spacing": 5, // Gaps between modules (4px)
     "modules-left": [ "clock", "hyprland/workspaces" ],
     "modules-center": ["hyprland/window"],
-    "modules-right": ["tray", "pulseaudio"],
+    "modules-right": ["tray", "bluetooth", "pulseaudio"],
     "hyprland/workspaces": {
       "format": "{icon}",
       "format-icons": {
@@ -34,6 +34,16 @@
         "format": "<span color='#bf616a'> </span>{:%H:%M}",
         "format-alt": "<span color='#bf616a'> </span>{:%a %b %d}",
         "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
+    },
+
+    "bluetooth": {
+        "format": "󰂯 {status}",
+        "format-off": "󰂲",
+        "format-connected": "󰂱 {device_alias}",
+        "format-connected-battery": "󰂱 {device_alias} {device_battery_percentage}%",
+        "tooltip-format-connected": "{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "on-click": "blueman-manager",
     },
 
     "pulseaudio": {
