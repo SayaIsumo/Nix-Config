@@ -11,6 +11,7 @@
     ./git
     ./gpg
     ./claude-desktop
+    ./hyprland
   ];
 
   home.username = "saya";

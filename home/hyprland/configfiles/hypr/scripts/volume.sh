@@ -3,7 +3,7 @@
 down() {
 pamixer -d 2
 volume=$(pamixer --get-volume)
-[$volume -gt 0 ] && volume=`expr $volume`  
+[ $volume -gt 0 ] && volume=`expr $volume`  
 dunstify -a "VOLUME" "Decreasing to $volume%" -h int:value:"$volume" -i audio-volume-low-symbolic -r 2593 -u normal
 canberra-gtk-play -i dialog-error -d "error"
 }
