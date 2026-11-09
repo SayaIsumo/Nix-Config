@@ -446,6 +446,14 @@
         variant = "mocha";
       };
     };
+    # Papirus icons with Catppuccin-coloured folders (Thunar and other GTK apps)
+    iconTheme = {
+      name = "Papirus-Dark";
+      package = pkgs.catppuccin-papirus-folders.override {
+        flavor = "mocha";
+        accent = "lavender";
+      };
+    };
   };
 
   # cursor theme for GTK/X11 apps; Hyprland picks it up via XCURSOR_THEME in hyprland.lua
