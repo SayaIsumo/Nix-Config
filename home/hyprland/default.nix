@@ -26,8 +26,9 @@
   # the screenshot keybinds in hyprland.lua save here, and grim fails if it's missing
   systemd.user.tmpfiles.rules = [ "d %h/Pictures/Screenshots 0755 - - -" ];
 
-  # keep blueman-applet's pairing agent but drop its tray icon (waybar's bluetooth module replaces it)
-  dconf.settings."org/blueman/general".plugin-list = [ "!StatusIcon" ];
+  # keep blueman-applet's pairing agent but drop its tray icon (waybar's bluetooth module replaces it).
+  # ShowConnected depends on StatusIcon and would load it back in, so disable both
+  dconf.settings."org/blueman/general".plugin-list = [ "!StatusIcon" "!ShowConnected" ];
 
   # polkit authentication agent (GNOME Shell used to provide one)
   services.hyprpolkitagent.enable = true;
