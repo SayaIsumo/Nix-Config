@@ -40,3 +40,26 @@ jobs:
             nix run nixpkgs#nvd -- --color never diff ./base ./result
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
+
+  # Merge the weekly flake.lock update PR once its build has passed.
+  # update-flake.yml starts this workflow on that branch via workflow_dispatch.
+  # Runs only on that branch, and only if the build job succeeded, so a
+  # failing update stays open for manual review.
+  automerge-flake-update:
+    needs: build
+    if: github.ref_name == 'update_flake_lock_action' || github.head_ref == 'update_flake_lock_action'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # merge into main
+      pull-requests: write # merge the PR
+    steps:
+      # --match-head-commit refuses the merge if the branch moved after this
+      # build started, so only the commit that was actually built gets merged.
+      - name: Merge the flake.lock update PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BUILT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          gh pr merge update_flake_lock_action --repo "$GITHUB_REPOSITORY" \
+            --merge --delete-branch \
+            --match-head-commit "$BUILT_SHA"
