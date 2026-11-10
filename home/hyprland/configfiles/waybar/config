@@ -28,10 +28,7 @@
         "format": "{}"
     },
     "tray": {
-        "spacing": 10,
-        // newest icons first, so app indicators sit left of the
-        // nm-applet/blueman icons that register at login
-        "reverse-direction": true
+        "spacing": 10
     },
     "clock": {
         "format": "<span color='#bf616a'> </span>{:%H:%M}",
