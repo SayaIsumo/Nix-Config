@@ -39,9 +39,8 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("bash " .. scripts .. "/wallpaper.sh")
     hl.exec_cmd("wl-paste --watch cliphist store")
     hl.exec_cmd("waybar")
-    -- kept for the pairing agent; its tray icon is turned off via dconf in default.nix.
-    -- no nm-applet: waybar's network/bluetooth modules cover what the tray icons showed
     hl.exec_cmd("blueman-applet")
+    hl.exec_cmd("nm-applet --indicator")
 end)
 
 
