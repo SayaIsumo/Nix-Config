@@ -161,8 +161,9 @@ bind("M",              hl.dsp.exit())
 bind("E",              hl.dsp.exec_cmd(fileManager))
 bind("V",              hl.dsp.window.float({ action = "toggle" }))
 bind("D",              hl.dsp.exec_cmd(menu))
-bind("P",              hl.dsp.exec_cmd("grim " .. screenshot))
-bind("SHIFT + P",      hl.dsp.exec_cmd("grim -g \"$(slurp)\" " .. screenshot))
+bind("P",              hl.dsp.exec_cmd("grim - | tee " .. screenshot .. " | wl-copy"))
+bind("SHIFT + P",      hl.dsp.exec_cmd("geom=$(slurp) && grim -g \"$geom\" - | tee " .. screenshot .. " | wl-copy"))
+bind("ALT + P",        hl.dsp.exec_cmd("geom=$(slurp) && grim -g \"$geom\" - | satty -f - --copy-command wl-copy --early-exit -o '~/Pictures/Screenshots/%s_satty.png'"))
 bind("J",              hl.dsp.layout("togglesplit")) -- dwindle only
 bind("F",              hl.dsp.window.fullscreen())
 bind("L",              hl.dsp.exec_cmd("swaylock"))
@@ -210,5 +211,11 @@ hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("bash " .. scripts .. "/brightn
 hl.window_rule({
     name  = "float-floatterm",
     match = { class = "^(floatterm)$" },
+    float = true,
+})
+
+hl.window_rule({
+    name  = "float-satty",
+    match = { class = "^(com.gabm.satty)$" },
     float = true,
 })
