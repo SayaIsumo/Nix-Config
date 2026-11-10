@@ -5,6 +5,7 @@
     wlogout
     grim
     slurp
+    satty # screenshot annotation (SUPER+ALT+P)
     swaylock-effects
     xdg-utils
     nomacs
@@ -21,6 +22,9 @@
     networkmanagerapplet # network tray + connection editor (Settings > Network)
     nwg-look # GTK theme/font/icon settings (Settings > Appearance)
   ];
+
+  # the screenshot keybinds in hyprland.lua save here, and grim fails if it's missing
+  systemd.user.tmpfiles.rules = [ "d %h/Pictures/Screenshots 0755 - - -" ];
 
   # polkit authentication agent (GNOME Shell used to provide one)
   services.hyprpolkitagent.enable = true;
