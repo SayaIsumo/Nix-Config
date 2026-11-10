@@ -244,6 +244,12 @@
     enable = true;
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    # Render the Steam client on the RX 7900 (which drives the monitor).
+    # Otherwise steamwebhelper picks the Ryzen iGPU, and its bursty redraws
+    # cause audible static on the onboard audio's front headphone jack.
+    package = pkgs.steam.override {
+      extraEnv.DRI_PRIME = "pci-0000_03_00_0";
+    };
   };
 
   # Hyprland's portal handles screencast/screenshots; the GTK one provides file pickers
