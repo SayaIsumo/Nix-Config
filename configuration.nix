@@ -268,5 +268,7 @@
   programs.appimage.enable = true;
   programs.appimage.binfmt = true;
 
+  programs.nano.enable = false;
+
   system.stateVersion = "26.05";
 }
