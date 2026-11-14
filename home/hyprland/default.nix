@@ -500,9 +500,6 @@
     x11.enable = true;
   };
 
-  # wofi kept as a fallback while trying rofi
-  programs.wofi.enable = true;
-
   # app launcher (SUPER+D). rofi 2.0 runs natively on Wayland
   programs.rofi = {
     enable = true;
@@ -543,9 +540,5 @@
 
     # waybar config
     ".config/waybar/config".source = ./configfiles/waybar/config;
-
-    # wofi
-    ".config/wofi/config".source = ./configfiles/wofi/config;
-    ".config/wofi/style.css".source = ./configfiles/wofi/style.css;
   };
 }
