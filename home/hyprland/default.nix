@@ -517,6 +517,9 @@
     };
   };
 
+  # grid layout for the app launcher (SUPER+D runs rofi -theme mocha-grid); it imports mocha.rasi
+  xdg.dataFile."rofi/themes/mocha-grid.rasi".source = ./configfiles/rofi/mocha-grid.rasi;
+
   # start Wayland user services (awww) only in Hyprland. The default graphical-session.target
   # is also reached under GNOME, where awww-daemon has no layer-shell and would restart-loop.
   # hyprland-session.target ships with Hyprland and is started by start-hyprland
