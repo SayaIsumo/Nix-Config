@@ -162,6 +162,8 @@ bind("M",              hl.dsp.exit())
 bind("E",              hl.dsp.exec_cmd(fileManager))
 bind("V",              hl.dsp.window.float({ action = "toggle" }))
 bind("D",              hl.dsp.exec_cmd(menu))
+-- calculator (rofi-calc): Enter copies the result
+bind("C",              hl.dsp.exec_cmd([[rofi -show calc -modi calc -no-show-match -no-sort -calc-command "echo -n '{result}' | wl-copy"]]))
 bind("P",              hl.dsp.exec_cmd(screenshot .. " -m output -m active")) -- focused monitor
 bind("SHIFT + P",      hl.dsp.exec_cmd(screenshot .. " -m region"))
 bind("CTRL + P",       hl.dsp.exec_cmd(screenshot .. " -m window")) -- click a window

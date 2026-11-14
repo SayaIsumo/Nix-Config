@@ -507,6 +507,7 @@
   programs.rofi = {
     enable = true;
     theme = ./configfiles/rofi/mocha.rasi;
+    plugins = [ pkgs.rofi-calc ]; # calculator (SUPER+C)
     settings = {
       show-icons = true;
       icon-theme = "Papirus-Dark";
