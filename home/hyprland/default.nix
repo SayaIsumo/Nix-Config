@@ -515,6 +515,27 @@
     };
   };
 
+  # theme for hyprtoolkit apps (hyprlauncher): Catppuccin Mocha, lavender accent like
+  # the cursor/GTK theme. Colors are 0xAARRGGBB
+  programs.hyprtoolkit = {
+    enable = true;
+    settings = {
+      background = "0xFF1e1e2e"; # base
+      base = "0xFF181825"; # mantle (input field, list)
+      alternate_base = "0xFF313244"; # surface0
+      text = "0xFFcdd6f4";
+      bright_text = "0xFF11111b"; # crust, text on top of the accent
+      link_text = "0xFF89b4fa"; # blue
+      accent = "0xFFb4befe"; # lavender
+      accent_secondary = "0xFFcba6f7"; # mauve
+      rounding_large = 10; # matches Hyprland window rounding
+      rounding_small = 6;
+      font_family = "FiraCode Nerd Font";
+      font_family_monospace = "FiraCode Nerd Font Mono";
+      icon_theme = "Papirus-Dark";
+    };
+  };
+
   # start Wayland user services (awww) only in Hyprland. The default graphical-session.target
   # is also reached under GNOME, where awww-daemon has no layer-shell and would restart-loop.
   # hyprland-session.target ships with Hyprland and is started by start-hyprland
