@@ -12,7 +12,6 @@
 
 window {
     width:            750px;
-    height:           400px;
     padding:          10px;
     border:           3px;
     border-color:     @accent;
@@ -45,6 +44,7 @@ entry {
 
 listview {
     scrollbar: false;
+    lines:     7; /* window height follows the rows */
     spacing:   4px;
 }
 
