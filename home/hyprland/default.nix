@@ -3,16 +3,13 @@
 
   home.packages = with pkgs; [
     wlogout
-    grim
-    slurp
     satty # screenshot annotation (SUPER+ALT+P)
-    swaylock-effects
+    hyprshot # screenshots (SUPER+P, SUPER+SHIFT+P, SUPER+CTRL+P)
     xdg-utils
     nomacs
     brightnessctl
     pamixer
     pavucontrol
-    awww
     wl-clipboard
     cliphist
     # replacements for the GNOME apps
@@ -23,7 +20,7 @@
     nwg-look # GTK theme/font/icon settings (Settings > Appearance)
   ];
 
-  # the screenshot keybinds in hyprland.lua save here, and grim fails if it's missing
+  # the screenshot keybinds in hyprland.lua save here
   systemd.user.tmpfiles.rules = [ "d %h/Pictures/Screenshots 0755 - - -" ];
 
   # keep blueman-applet's pairing agent but drop its tray icon (waybar's bluetooth module replaces it).
@@ -32,48 +29,76 @@
 
   # polkit authentication agent (GNOME Shell used to provide one)
   services.hyprpolkitagent.enable = true;
-  programs.swaylock = {
+
+  # idle: monitor off after 10 min, lock after 15, lock before suspend. Also makes
+  # `loginctl lock-session` (wlogout's Lock button) run hyprlock.
+  # Hyprland 0.57 needs the Lua dispatcher form for dpms
+  services.hypridle = {
     enable = true;
-    package = pkgs.swaylock-effects;
     settings = {
-      daemonize = true;
-      show-failed-attempts = true;
-      clock = true;
-      screenshot = true;
-      effect-blur = "9x5";
-      effect-vignette = "0.5:0.5";
-      color = "1f1d2e80";
-      font = "Inter";
-      indicator = true;
-      indicator-radius = 200;
-      indicator-thickness = 20;
-      line-color = "1f1d2e";
-      ring-color = "191724";
-      inside-color = "1f1d2e";
-      key-hl-color = "eb6f92";
-      separator-color = "00000000";
-      text-color = "e0def4";
-      text-caps-lock-color = "";
-      line-ver-color = "eb6f92";
-      ring-ver-color = "eb6f92";
-      inside-ver-color = "1f1d2e";
-      text-ver-color = "e0def4";
-      ring-wrong-color = "31748f";
-      text-wrong-color = "31748f";
-      inside-wrong-color = "1f1d2e";
-      inside-clear-color = "1f1d2e";
-      text-clear-color = "e0def4";
-      ring-clear-color = "9ccfd8";
-      line-clear-color = "1f1d2e";
-      line-wrong-color = "1f1d2e";
-      bs-hl-color = "31748f";
-      grace = 1;
-      grace-no-mouse = true;
-      grace-no-touch = true;
-      fade-in = 0.2;
-      ignore-empty-password = true;
+      general = {
+        lock_cmd = "pidof hyprlock || hyprlock";
+        before_sleep_cmd = "loginctl lock-session";
+        after_sleep_cmd = "hyprctl dispatch 'hl.dsp.dpms({ action = \"on\" })'";
+      };
+      listener = [
+        {
+          timeout = 600;
+          on-timeout = "hyprctl dispatch 'hl.dsp.dpms({ action = \"off\" })'";
+          on-resume = "hyprctl dispatch 'hl.dsp.dpms({ action = \"on\" })'";
+        }
+        {
+          timeout = 900;
+          on-timeout = "loginctl lock-session";
+        }
+      ];
     };
   };
+
+  # lock screen (SUPER+L), same rose-pine look the swaylock-effects config had.
+  # PAM service is security.pam.services.hyprlock in configuration.nix
+  programs.hyprlock = {
+    enable = true;
+    settings = {
+      general = {
+        hide_cursor = true;
+        ignore_empty_input = true;
+      };
+      background = [{
+        path = "screenshot";
+        blur_passes = 3;
+        blur_size = 7;
+        brightness = 0.6;
+      }];
+      label = [{
+        text = "$TIME";
+        font_family = "Inter";
+        font_size = 72;
+        color = "rgb(e0def4)";
+        position = "0, 120";
+        halign = "center";
+        valign = "center";
+      }];
+      input-field = [{
+        size = "300, 50";
+        position = "0, -40";
+        halign = "center";
+        valign = "center";
+        outline_thickness = 4;
+        outer_color = "rgb(191724)";
+        inner_color = "rgb(1f1d2e)";
+        font_color = "rgb(e0def4)";
+        font_family = "Inter";
+        check_color = "rgb(eb6f92)"; # verifying
+        fail_color = "rgb(31748f)";
+        fail_text = "$FAIL ($ATTEMPTS)";
+        capslock_color = "rgb(f6c177)";
+        placeholder_text = "Password";
+        fade_on_empty = false;
+      }];
+    };
+  };
+
   # hyprland stuff
   programs.waybar = {
     enable = true;
@@ -477,6 +502,18 @@
 
   programs.wofi.enable = true;
 
+  # start Wayland user services (awww) only in Hyprland. The default graphical-session.target
+  # is also reached under GNOME, where awww-daemon has no layer-shell and would restart-loop.
+  # hyprland-session.target ships with Hyprland and is started by start-hyprland
+  wayland.systemd.target = "hyprland-session.target";
+
+  services.awww.enable = true;
+  # the daemon restores its cached image on its own; this sets the configured one once its socket is up
+  systemd.user.services.awww.Service.ExecStartPost = "${pkgs.writeShellScript "awww-set-wallpaper" ''
+    until ${pkgs.awww}/bin/awww query >/dev/null 2>&1; do sleep 0.1; done
+    ${pkgs.awww}/bin/awww img "$HOME/Pictures/Wallpapers/wallpaper.jpg"
+  ''}";
+
   home.file = {
     # hyprland stuff
     ".config/hypr/hyprland.lua".source = ./configfiles/hypr/hyprland.lua;
@@ -485,7 +522,6 @@
     # hyprland scripts
     ".config/hypr/scripts/volume.sh".source = ./configfiles/hypr/scripts/volume.sh;
     ".config/hypr/scripts/brightness.sh".source = ./configfiles/hypr/scripts/brightness.sh;
-    ".config/hypr/scripts/wallpaper.sh".source = ./configfiles/hypr/scripts/wallpaper.sh;
 
     # waybar config
     ".config/waybar/config".source = ./configfiles/waybar/config;
