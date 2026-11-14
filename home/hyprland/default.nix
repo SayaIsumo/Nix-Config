@@ -30,6 +30,31 @@
   # polkit authentication agent (GNOME Shell used to provide one)
   services.hyprpolkitagent.enable = true;
 
+  # idle: monitor off after 10 min, lock after 15, lock before suspend. Also makes
+  # `loginctl lock-session` (wlogout's Lock button) run hyprlock.
+  # Hyprland 0.57 needs the Lua dispatcher form for dpms
+  services.hypridle = {
+    enable = true;
+    settings = {
+      general = {
+        lock_cmd = "pidof hyprlock || hyprlock";
+        before_sleep_cmd = "loginctl lock-session";
+        after_sleep_cmd = "hyprctl dispatch 'hl.dsp.dpms({ action = \"on\" })'";
+      };
+      listener = [
+        {
+          timeout = 600;
+          on-timeout = "hyprctl dispatch 'hl.dsp.dpms({ action = \"off\" })'";
+          on-resume = "hyprctl dispatch 'hl.dsp.dpms({ action = \"on\" })'";
+        }
+        {
+          timeout = 900;
+          on-timeout = "loginctl lock-session";
+        }
+      ];
+    };
+  };
+
   # lock screen (SUPER+L), same rose-pine look the swaylock-effects config had.
   # PAM service is security.pam.services.hyprlock in configuration.nix
   programs.hyprlock = {
