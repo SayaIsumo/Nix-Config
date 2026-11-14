@@ -540,5 +540,13 @@
 
     # waybar config
     ".config/waybar/config".source = ./configfiles/waybar/config;
+
+    # screen-share portal: tick "allow restore token" by default. Vesktop asks the portal
+    # for a source twice per stream; with the token the second request reuses the first pick
+    ".config/hypr/xdph.conf".text = ''
+      screencopy {
+        allow_token_by_default = true
+      }
+    '';
   };
 }
