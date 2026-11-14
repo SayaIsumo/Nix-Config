@@ -89,6 +89,8 @@
   # Keyring (secrets for Evolution, Chromium, etc.), unlocked at login via greetd
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.greetd.enableGnomeKeyring = true;
+  # lets hyprlock (Hyprland lock screen) check the password
+  security.pam.services.hyprlock = { };
   programs.seahorse.enable = true;
 
   # File manager with archive/removable-media plugins; gvfs for trash, mounts

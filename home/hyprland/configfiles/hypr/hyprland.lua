@@ -151,7 +151,8 @@ local function bind(keys, dispatcher, opts)
     hl.bind(mainMod .. (keys ~= "" and " + " .. keys or ""), dispatcher, opts)
 end
 
-local screenshot = "~/Pictures/Screenshots/$(date +'%s_grim.png')"
+-- hyprshot saves here and copies to the clipboard
+local screenshot = "hyprshot -o ~/Pictures/Screenshots"
 
 bind("RETURN",         hl.dsp.exec_cmd(terminal))
 bind("SHIFT + RETURN", hl.dsp.exec_cmd(terminal .. " --class=floatterm"))
@@ -162,12 +163,13 @@ bind("M",              hl.dsp.exit())
 bind("E",              hl.dsp.exec_cmd(fileManager))
 bind("V",              hl.dsp.window.float({ action = "toggle" }))
 bind("D",              hl.dsp.exec_cmd(menu))
-bind("P",              hl.dsp.exec_cmd("grim - | tee " .. screenshot .. " | wl-copy"))
-bind("SHIFT + P",      hl.dsp.exec_cmd("geom=$(slurp) && grim -g \"$geom\" - | tee " .. screenshot .. " | wl-copy"))
-bind("ALT + P",        hl.dsp.exec_cmd("geom=$(slurp) && grim -g \"$geom\" - | satty -f - --copy-command wl-copy --early-exit -o '~/Pictures/Screenshots/%s_satty.png'"))
+bind("P",              hl.dsp.exec_cmd(screenshot .. " -m output -m active")) -- focused monitor
+bind("SHIFT + P",      hl.dsp.exec_cmd(screenshot .. " -m region"))
+bind("CTRL + P",       hl.dsp.exec_cmd(screenshot .. " -m window")) -- click a window
+bind("ALT + P",        hl.dsp.exec_cmd("hyprshot -m region --raw | satty -f - --copy-command wl-copy --early-exit -o '~/Pictures/Screenshots/%s_satty.png'"))
 bind("J",              hl.dsp.layout("togglesplit")) -- dwindle only
 bind("F",              hl.dsp.window.fullscreen())
-bind("L",              hl.dsp.exec_cmd("swaylock"))
+bind("L",              hl.dsp.exec_cmd("hyprlock"))
 bind("SHIFT + L",      hl.dsp.exec_cmd("wlogout"))
 bind("N",              hl.dsp.exec_cmd("blueman-manager"))
 
