@@ -500,7 +500,21 @@
     x11.enable = true;
   };
 
+  # wofi kept as a fallback while trying rofi
   programs.wofi.enable = true;
+
+  # app launcher (SUPER+D). rofi 2.0 runs natively on Wayland
+  programs.rofi = {
+    enable = true;
+    theme = ./configfiles/rofi/mocha.rasi;
+    settings = {
+      show-icons = true;
+      icon-theme = "Papirus-Dark";
+      terminal = "kitty";
+      drun-display-format = "{name}";
+      display-drun = "";
+    };
+  };
 
   # start Wayland user services (awww) only in Hyprland. The default graphical-session.target
   # is also reached under GNOME, where awww-daemon has no layer-shell and would restart-loop.
