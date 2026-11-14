@@ -500,7 +500,20 @@
     x11.enable = true;
   };
 
+  # wofi kept as a fallback while trying hyprlauncher
   programs.wofi.enable = true;
+
+  # app launcher (SUPER+D). Runs as a daemon so it opens instantly; its look comes
+  # from the shared hyprtoolkit theme, not this config
+  services.hyprlauncher = {
+    enable = true;
+    settings = {
+      general.grab_focus = true;
+      cache.enabled = true; # rank apps you launch often higher
+      ui.window_size = "750 400"; # same size as the wofi window
+      finders.desktop_icons = true;
+    };
+  };
 
   # start Wayland user services (awww) only in Hyprland. The default graphical-session.target
   # is also reached under GNOME, where awww-daemon has no layer-shell and would restart-loop.

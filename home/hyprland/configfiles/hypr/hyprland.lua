@@ -25,7 +25,7 @@ hl.monitor({
 local terminal    = "kitty"
 local browser     = "chromium"
 local fileManager = "thunar"
-local menu        = "wofi"
+local menu        = "hyprlauncher --toggle" -- SUPER+D again closes it
 local scripts     = "~/.config/hypr/scripts"
 
 
