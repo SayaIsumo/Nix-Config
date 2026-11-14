@@ -3,11 +3,11 @@
 @import "mocha"
 
 window {
-    width:  820px; /* height follows the 3 rows */
+    width:  900px; /* height follows the 3 rows */
 }
 
 listview {
-    columns:      5;
+    columns:      4; /* ~25 characters per label before it gets cut off */
     lines:        3;
     spacing:      8px;
     fixed-height: true;
