@@ -238,6 +238,8 @@
   # Fonts
   fonts.packages = with pkgs; [
     nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono # kitty, wofi
+    inter # hyprlock
   ];
 
   programs.steam = {
