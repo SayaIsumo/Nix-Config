@@ -10,7 +10,6 @@
     brightnessctl
     pamixer
     pavucontrol
-    awww
     wl-clipboard
     cliphist
     # replacements for the GNOME apps
@@ -478,6 +477,18 @@
 
   programs.wofi.enable = true;
 
+  # start Wayland user services (awww) only in Hyprland. The default graphical-session.target
+  # is also reached under GNOME, where awww-daemon has no layer-shell and would restart-loop.
+  # hyprland-session.target ships with Hyprland and is started by start-hyprland
+  wayland.systemd.target = "hyprland-session.target";
+
+  services.awww.enable = true;
+  # the daemon restores its cached image on its own; this sets the configured one once its socket is up
+  systemd.user.services.awww.Service.ExecStartPost = "${pkgs.writeShellScript "awww-set-wallpaper" ''
+    until ${pkgs.awww}/bin/awww query >/dev/null 2>&1; do sleep 0.1; done
+    ${pkgs.awww}/bin/awww img "$HOME/Pictures/Wallpapers/wallpaper.jpg"
+  ''}";
+
   home.file = {
     # hyprland stuff
     ".config/hypr/hyprland.lua".source = ./configfiles/hypr/hyprland.lua;
@@ -486,7 +497,6 @@
     # hyprland scripts
     ".config/hypr/scripts/volume.sh".source = ./configfiles/hypr/scripts/volume.sh;
     ".config/hypr/scripts/brightness.sh".source = ./configfiles/hypr/scripts/brightness.sh;
-    ".config/hypr/scripts/wallpaper.sh".source = ./configfiles/hypr/scripts/wallpaper.sh;
 
     # waybar config
     ".config/waybar/config".source = ./configfiles/waybar/config;

@@ -36,7 +36,6 @@ local scripts     = "~/.config/hypr/scripts"
 -- See https://wiki.hypr.land/configuring/core/autostart/
 hl.on("hyprland.start", function()
     hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
-    hl.exec_cmd("bash " .. scripts .. "/wallpaper.sh")
     hl.exec_cmd("wl-paste --watch cliphist store")
     hl.exec_cmd("waybar")
     -- kept for the pairing agent; its tray icon is turned off via dconf in default.nix.
