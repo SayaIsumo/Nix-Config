@@ -500,7 +500,25 @@
     x11.enable = true;
   };
 
+  # wofi kept as a fallback while trying rofi
   programs.wofi.enable = true;
+
+  # app launcher (SUPER+D). rofi 2.0 runs natively on Wayland
+  programs.rofi = {
+    enable = true;
+    theme = ./configfiles/rofi/mocha.rasi;
+    plugins = [ pkgs.rofi-calc ]; # calculator (SUPER+C)
+    settings = {
+      show-icons = true;
+      icon-theme = "Papirus-Dark";
+      terminal = "kitty";
+      drun-display-format = "{name}";
+      display-drun = "";
+    };
+  };
+
+  # grid layout for the app launcher (SUPER+D runs rofi -theme mocha-grid); it imports mocha.rasi
+  xdg.dataFile."rofi/themes/mocha-grid.rasi".source = ./configfiles/rofi/mocha-grid.rasi;
 
   # start Wayland user services (awww) only in Hyprland. The default graphical-session.target
   # is also reached under GNOME, where awww-daemon has no layer-shell and would restart-loop.

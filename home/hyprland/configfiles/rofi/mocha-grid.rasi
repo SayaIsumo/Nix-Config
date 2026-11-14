@@ -1,0 +1,32 @@
+/* Grid layout for the app launcher (SUPER+D): the Mocha list theme with
+   big icons in rows and columns. The calculator keeps the list layout */
+@import "mocha"
+
+window {
+    width:  900px; /* height follows the 3 rows */
+}
+
+listview {
+    columns:      4; /* ~25 characters per label before it gets cut off */
+    lines:        3;
+    spacing:      8px;
+    fixed-height: true;
+    fixed-columns: true;
+    flow:         horizontal; /* fill rows left to right, not columns top to bottom */
+}
+
+element {
+    orientation:   vertical;
+    padding:       14px 6px;
+    spacing:       8px;
+    border-radius: 8px;
+}
+
+element-icon {
+    size: 56px;
+    horizontal-align: 0.5;
+}
+
+element-text {
+    horizontal-align: 0.5;
+}
