@@ -31,7 +31,18 @@
     bat
     whatsie
     protonup-qt
-    ani-cli
+    # 5.1 hands mpv the video-only HLS variant, so hianime streams with
+    # separate audio renditions play silent. Fixed upstream in #1967, not
+    # yet released; drop this override once nixpkgs ships > 5.1.
+    (ani-cli.overrideAttrs (old: {
+      version = "5.1-unstable-2026-10-22";
+      src = fetchFromGitHub {
+        owner = "pystardust";
+        repo = "ani-cli";
+        rev = "0301d67d5768d332b049821a30082ad43d9a215a";
+        hash = "sha256-NfC6dUwleAu0VX314EetbsxmjOFjWF9823zbwOcyw5s=";
+      };
+    }))
     btop
     mpv
     keepassxc
