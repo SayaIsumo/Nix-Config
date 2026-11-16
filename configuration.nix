@@ -199,10 +199,16 @@
             "capture.props" = {
               "node.name" = "capture.rnnoise_source";
               "node.passive" = true;
+              # Always read the real USB mic, never whatever the default is
+              # (the default is now this filter's own output).
+              "target.object" = "alsa_input.usb-Generic_USB_Audio-00.HiFi__Mic__source";
             };
             "playback.props" = {
               "node.name" = "rnnoise_source";
               "media.class" = "Audio/Source";
+              # Outrank the hardware mic (priority 1812) so WirePlumber picks
+              # this as the default source.
+              "priority.session" = 2000;
             };
           };
         }
