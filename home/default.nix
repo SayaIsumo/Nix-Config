@@ -30,7 +30,7 @@
     ripgrep
     bat
     whatsie
-    protonup-qt
+    protonplus
     # 5.1 hands mpv the video-only HLS variant, so hianime streams with
     # separate audio renditions play silent. Fixed upstream in #1967, not
     # yet released; drop this override once nixpkgs ships > 5.1.
