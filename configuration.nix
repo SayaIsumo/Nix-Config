@@ -226,8 +226,6 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
 
-  programs.noisetorch.enable = true;
-
   # Virtualization with virt-manager
   programs.dconf.enable = true;
 
