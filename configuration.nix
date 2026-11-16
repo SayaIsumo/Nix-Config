@@ -166,25 +166,43 @@
         "module.x11.bell" = false;
       };
     };
-    # WebRTC echo cancellation: adds an "Echo-Cancel Source" virtual mic.
-    # monitor.mode uses the default sink's monitor as the echo reference
-    # instead of a virtual sink, so app audio keeps going straight to the
-    # real output (a virtual default sink breaks Vesktop's screen-share audio).
-    extraConfig.pipewire."60-echo-cancel" = {
+    # RNNoise noise suppression: adds a "Noise Suppressed Mic" virtual source.
+    # Replaces WebRTC echo-cancel, which used the output monitor as its echo
+    # reference and so ducked/erased the voice whenever game audio was loud
+    # (pointless with headphones anyway: there is no acoustic echo).
+    # VAD threshold mutes audio below that voice-probability; kept low so quiet
+    # speech isn't cut. Raise it (plugin default 50) to gate more aggressively.
+    extraConfig.pipewire."60-rnnoise" = {
       "context.modules" = [
         {
-          name = "libpipewire-module-echo-cancel";
+          name = "libpipewire-module-filter-chain";
           args = {
-            "library.name" = "aec/libspa-aec-webrtc";
-            "node.latency" = "1024/48000";
-            "monitor.mode" = true;
+            "node.description" = "Noise Suppressed Mic";
+            "media.name" = "Noise Suppressed Mic";
+            "filter.graph" = {
+              nodes = [
+                {
+                  type = "ladspa";
+                  name = "rnnoise";
+                  plugin = "${pkgs.rnnoise-plugin}/lib/ladspa/librnnoise_ladspa.so";
+                  label = "noise_suppressor_mono";
+                  control = {
+                    "VAD Threshold (%)" = 20.0;
+                    "VAD Grace Period (ms)" = 300;
+                    "Retroactive VAD Grace (ms)" = 50;
+                  };
+                }
+              ];
+            };
+            "audio.rate" = 48000;
+            "audio.position" = [ "MONO" ];
             "capture.props" = {
-              "node.name" = "capture.echo_cancel";
+              "node.name" = "capture.rnnoise_source";
               "node.passive" = true;
             };
-            "source.props" = {
-              "node.name" = "echo_cancel_source";
-              "node.description" = "Echo-Cancel Source";
+            "playback.props" = {
+              "node.name" = "rnnoise_source";
+              "media.class" = "Audio/Source";
             };
           };
         }
@@ -225,8 +243,6 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-
-  programs.noisetorch.enable = true;
 
   # Virtualization with virt-manager
   programs.dconf.enable = true;
