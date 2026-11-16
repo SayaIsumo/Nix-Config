@@ -537,6 +537,7 @@
     # hyprland scripts
     ".config/hypr/scripts/volume.sh".source = ./configfiles/hypr/scripts/volume.sh;
     ".config/hypr/scripts/brightness.sh".source = ./configfiles/hypr/scripts/brightness.sh;
+    ".config/hypr/scripts/claude-quick-entry.sh".source = ./configfiles/hypr/scripts/claude-quick-entry.sh;
 
     # waybar config
     ".config/waybar/config".source = ./configfiles/waybar/config;

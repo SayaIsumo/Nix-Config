@@ -173,6 +173,8 @@ bind("F",              hl.dsp.window.fullscreen())
 bind("L",              hl.dsp.exec_cmd("hyprlock"))
 bind("SHIFT + L",      hl.dsp.exec_cmd("wlogout"))
 bind("N",              hl.dsp.exec_cmd("blueman-manager"))
+-- Claude Desktop Quick Entry (its own Ctrl+Alt+Space, routed via the portal)
+hl.bind("CTRL + ALT + SPACE", hl.dsp.exec_cmd("bash " .. scripts .. "/claude-quick-entry.sh"))
 
 -- Move focus with mainMod + arrow keys
 bind("left",  hl.dsp.focus({ direction = "left" }))
