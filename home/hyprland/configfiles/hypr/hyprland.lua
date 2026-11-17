@@ -17,6 +17,14 @@ hl.monitor({
     scale    = 1,
 })
 
+-- laptop panel (only exists on the laptop; native res, no auto 1.5x scaling)
+hl.monitor({
+    output   = "eDP-1",
+    mode     = "1920x1080@60",
+    position = "0x0",
+    scale    = 1,
+})
+
 
 ---------------------
 ---- MY PROGRAMS ----

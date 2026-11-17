@@ -14,7 +14,7 @@
       nix-update = "nix flake update --flake ~/Projects/NixOS-Config/";
       nix-clean = "nix-collect-garbage -d && sudo nix-collect-garbage -d";
       setup-direnv = "echo 'use flake' >> .envrc && direnv allow";
-      rebuild-system = "sudo nixos-rebuild switch --flake github:domi2610/Nix-Config#nixos";
+      rebuild-system = "sudo nixos-rebuild switch --flake github:domi2610/Nix-Config"; # nixos-rebuild picks #<hostname>
     };
   };
 }

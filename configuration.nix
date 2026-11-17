@@ -1,15 +1,9 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+# Shared by every host; per-machine settings (hardware scan, hostname, GPU
+# tweaks) live in hosts/<name>/.
 
 { pkgs, ... }:
 
 {
-  imports = [
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-  ];
-
   # enable experimental features
   nix =
     let
@@ -47,8 +41,6 @@
   boot.loader.efi.canTouchEfiVariables = true;
   # latest Kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  networking.hostName = "nixos"; # Define your hostname.
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -270,12 +262,6 @@
     enable = true;
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-    # Render the Steam client on the RX 7900 (which drives the monitor).
-    # Otherwise steamwebhelper picks the Ryzen iGPU, and its bursty redraws
-    # cause audible static on the onboard audio's front headphone jack.
-    package = pkgs.steam.override {
-      extraEnv.DRI_PRIME = "pci-0000_03_00_0";
-    };
   };
 
   # Hyprland's portal handles screencast/screenshots; the GTK one provides file pickers

@@ -21,25 +21,34 @@
       ...
     }:
     {
-      nixosConfigurations = {
-        nixos = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            ./configuration.nix
-            {
-              environment.etc."nix/inputs/nixpkgs".source = nixpkgs.outPath;
-              nix.settings.nix-path = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
-              nix.registry.nixpkgs.flake = nixpkgs;
-            }
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = { inherit claude-desktop; };
-              home-manager.users.saya = import ./home;
-            }
-          ];
+      nixosConfigurations =
+        let
+          # shared configuration.nix + home, plus hosts/<host>/ for per-machine bits
+          mkHost =
+            host:
+            nixpkgs.lib.nixosSystem {
+              system = "x86_64-linux";
+              modules = [
+                ./configuration.nix
+                ./hosts/${host}
+                {
+                  environment.etc."nix/inputs/nixpkgs".source = nixpkgs.outPath;
+                  nix.settings.nix-path = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
+                  nix.registry.nixpkgs.flake = nixpkgs;
+                }
+                home-manager.nixosModules.home-manager
+                {
+                  home-manager.useGlobalPkgs = true;
+                  home-manager.useUserPackages = true;
+                  home-manager.extraSpecialArgs = { inherit claude-desktop; };
+                  home-manager.users.saya = import ./home;
+                }
+              ];
+            };
+        in
+        {
+          desktop = mkHost "desktop";
+          laptop = mkHost "laptop";
         };
-      };
     };
 }
