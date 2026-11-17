@@ -12,6 +12,7 @@
     ./gpg
     ./claude-desktop
     ./hyprland
+    ./fastfetch
   ];
 
   home.username = "saya";
@@ -47,7 +48,6 @@
     mpv
     keepassxc
     libreoffice
-    fastfetch
     zip
     rar
     unzip
