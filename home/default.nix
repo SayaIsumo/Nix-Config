@@ -22,7 +22,6 @@
     claude-code
     mangohud
     lazygit
-    ungoogled-chromium
     curl
     wget
     sshfs
@@ -46,7 +45,6 @@
     }))
     btop
     mpv
-    keepassxc
     libreoffice
     zip
     rar
@@ -68,6 +66,19 @@
   };
 
   programs.bash.enable = true;
+
+  programs.chromium = {
+    enable = true;
+    package = pkgs.ungoogled-chromium;
+  };
+
+  # Also links KeePassXC's native messaging manifest into
+  # ~/.config/chromium/NativeMessagingHosts, so the KeePassXC-Browser
+  # extension keeps finding keepassxc-proxy after every update.
+  # Untick "Update native messaging manifest files at startup" in
+  # KeePassXC's Browser Integration > Advanced, or it will complain that
+  # it can't overwrite the read-only link.
+  programs.keepassxc.enable = true;
 
   programs.direnv = {
     enable = true;
