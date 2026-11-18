@@ -49,6 +49,8 @@ hl.on("hyprland.start", function()
     -- kept for the pairing agent; its tray icon is turned off via dconf in default.nix.
     -- no nm-applet: waybar's network/bluetooth modules cover what the tray icons showed
     hl.exec_cmd("blueman-applet")
+    -- must be running and unlocked for KeePassXC-Browser autofill
+    hl.exec_cmd("keepassxc --minimized")
 end)
 
 
