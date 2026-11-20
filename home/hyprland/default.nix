@@ -1,5 +1,6 @@
 { pkgs, ... }:
 {
+  imports = [ ./laptop.nix ];
 
   home.packages = with pkgs; [
     wlogout
@@ -359,6 +360,25 @@
       #tray > .needs-attention {
         -gtk-icon-effect: highlight;
         background-color: #eb4d4b;
+      }
+
+      #power-profiles-daemon {
+        padding: 0px 15px;
+        border-radius: 20px;
+        background-color: #1e1e1e;
+        color: #a6e3a1;
+      }
+
+      #power-profiles-daemon.performance {
+        color: #f38ba8;
+      }
+
+      #power-profiles-daemon.power-saver {
+        color: #89b4fa;
+      }
+
+      #battery.warning:not(.charging) {
+        color: #f6c177;
       }
 
       #idle_inhibitor {
