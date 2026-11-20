@@ -11,12 +11,11 @@
     "modules-right": ["tray", "network", "bluetooth", "pulseaudio"],
     "hyprland/workspaces": {
       "format": "{icon}",
+      // always show 1-5 so a dot's position matches its workspace number;
+      // otherwise empty workspaces vanish and later dots shift left
+      "persistent-workspaces": { "*": 5 },
       "format-icons": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": "",
+        "empty": "",
         "urgent": "",
         "active": "",
         "default": ""
