@@ -1,0 +1,32 @@
+# TODO(remove): temporary, see the protontricks override in configuration.nix.
+# Delete this file together with it once nixpkgs fixes Matoking/protontricks#521.
+--- a/src/protontricks/steam.py
++++ b/src/protontricks/steam.py
+@@ -584,9 +584,10 @@
+ 
+ APPINFO_V42_STRUCT_HEADER = "<4x4xi4xi4x12x"
+ 
+-# Records are 80 bytes long, but they have only one value we're interested in:
+-# the VDF section length
+-APPINFO_V42_STRUCT_SECTION = "<4x4xL68x"
++# Records are a 16-byte head (app ID, offset, VDF section length, trailer
++# length) followed by a trailer. The trailer is usually 64 bytes (80-byte
++# record) but can be longer, so its length has to be read per record.
++APPINFO_V42_STRUCT_SECTION = "<4x4xLL"
+ 
+ # For backwards cmopatibility, in case someone relied on the earlier imports
+ APPINFO_V28_STRUCT_SECTION = APPINFO_V40_STRUCT_SECTION
+@@ -745,11 +746,11 @@
+         # the segment length which is all we need.
+         section_size = struct.calcsize(APPINFO_V42_STRUCT_SECTION)
+         for _ in range(0, vdf_segment_count):
+-            (app_segment_size,) = struct.unpack(
++            (app_segment_size, trailer_size) = struct.unpack(
+                 APPINFO_V42_STRUCT_SECTION, data[i:i+section_size]
+             )
+             app_segment_sizes.append(app_segment_size)
+-            i += section_size
++            i += section_size + trailer_size
+ 
+         # Parse the key table
+         key_table = []
