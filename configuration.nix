@@ -281,13 +281,20 @@
 
   programs.steam.protontricks = {
     enable = true;
+
+    # TODO(remove): BEGIN temporary protontricks override (added 2026-11-21).
+    # Remove everything down to "END temporary protontricks override", plus
+    # patches/protontricks-appinfo-v42-trailer.patch, once nixpkgs'
+    # protontricks includes a fix for Matoking/protontricks#521. Check with:
+    #   nix eval --raw .#nixosConfigurations.desktop.pkgs.protontricks.version
+    #
     # Steam (Nov 2026) replaced appcache/appinfo.vdf with a sharded appinfo/
     # directory (format v42); 1.15.0 crashes with FileNotFoundError.
     # 1.15.1 reads it but imports its vendored _vdf directly, so nixpkgs'
     # revert-vendored-vdf patch and _vdf removal must go. 1.15.1 also assumes
     # fixed 80-byte section records and misparses shards with longer ones
     # (IndexError, Matoking/protontricks#521); the local patch reads each
-    # record's trailer length. Drop once nixpkgs ships a release fixing #521.
+    # record's trailer length.
     # makeOverridable: the steam module calls .override { extraCompatPaths },
     # which overridePythonAttrs alone would drop.
     package = pkgs.lib.makeOverridable (
@@ -309,6 +316,7 @@
         postPatch = "";
       })
     ) { };
+    # TODO(remove): END temporary protontricks override.
   };
 
   programs.appimage.enable = true;

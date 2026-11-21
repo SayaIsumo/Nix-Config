@@ -1,3 +1,5 @@
+# TODO(remove): temporary, see the protontricks override in configuration.nix.
+# Delete this file together with it once nixpkgs fixes Matoking/protontricks#521.
 --- a/src/protontricks/steam.py
 +++ b/src/protontricks/steam.py
 @@ -584,9 +584,10 @@
