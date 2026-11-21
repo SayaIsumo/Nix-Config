@@ -56,7 +56,7 @@
     };
   };
 
-  # lock screen (SUPER+L), same rose-pine look the swaylock-effects config had.
+  # lock screen (SUPER+L), Catppuccin Mocha with lavender accent.
   # PAM service is security.pam.services.hyprlock in configuration.nix
   programs.hyprlock = {
     enable = true;
@@ -75,7 +75,7 @@
         text = "$TIME";
         font_family = "Inter";
         font_size = 72;
-        color = "rgb(e0def4)";
+        color = "rgb(cdd6f4)";
         position = "0, 120";
         halign = "center";
         valign = "center";
@@ -86,14 +86,14 @@
         halign = "center";
         valign = "center";
         outline_thickness = 4;
-        outer_color = "rgb(191724)";
-        inner_color = "rgb(1f1d2e)";
-        font_color = "rgb(e0def4)";
+        outer_color = "rgb(b4befe)"; # lavender
+        inner_color = "rgb(1e1e2e)"; # base
+        font_color = "rgb(cdd6f4)"; # text
         font_family = "Inter";
-        check_color = "rgb(eb6f92)"; # verifying
-        fail_color = "rgb(31748f)";
+        check_color = "rgb(f9e2af)"; # yellow, while verifying
+        fail_color = "rgb(f38ba8)"; # red
         fail_text = "$FAIL ($ATTEMPTS)";
-        capslock_color = "rgb(f6c177)";
+        capslock_color = "rgb(fab387)"; # peach
         placeholder_text = "Password";
         fade_on_empty = false;
       }];
@@ -484,10 +484,28 @@
     };
   };
 
-  qt = {
-    enable = true;
-    platformTheme.name = "gtk3";
-  };
+  # Catppuccin palette for Qt apps (KeePassXC, hyprpolkitagent's prompt).
+  # The gtk3 platform theme only gave them a plain dark grey; qt5ct/qt6ct
+  # apply the Mocha Lavender color scheme instead. hyprpolkitagent's QML
+  # style reads its colors from this palette too.
+  qt =
+    let
+      qtctSettings = {
+        Appearance = {
+          style = "Fusion";
+          custom_palette = true;
+          color_scheme_path = "${pkgs.catppuccin-qt5ct}/share/qt5ct/colors/catppuccin-mocha-lavender.conf";
+          icon_theme = "Papirus-Dark";
+          standard_dialogs = "xdgdesktopportal";
+        };
+      };
+    in
+    {
+      enable = true;
+      platformTheme.name = "qtct";
+      qt5ctSettings = qtctSettings;
+      qt6ctSettings = qtctSettings;
+    };
 
   gtk = {
     enable = true;
