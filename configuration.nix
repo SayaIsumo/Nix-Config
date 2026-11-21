@@ -279,7 +279,37 @@
 
   hardware.xpadneo.enable = true; # Bluetooth
 
-  programs.steam.protontricks.enable = true;
+  programs.steam.protontricks = {
+    enable = true;
+    # Steam (Nov 2026) replaced appcache/appinfo.vdf with a sharded appinfo/
+    # directory (format v42); 1.15.0 crashes with FileNotFoundError.
+    # 1.15.1 reads it but imports its vendored _vdf directly, so nixpkgs'
+    # revert-vendored-vdf patch and _vdf removal must go. 1.15.1 also assumes
+    # fixed 80-byte section records and misparses shards with longer ones
+    # (IndexError, Matoking/protontricks#521); the local patch reads each
+    # record's trailer length. Drop once nixpkgs ships a release fixing #521.
+    # makeOverridable: the steam module calls .override { extraCompatPaths },
+    # which overridePythonAttrs alone would drop.
+    package = pkgs.lib.makeOverridable (
+      args:
+      (pkgs.protontricks.override args).overridePythonAttrs (old: rec {
+        version = "1.15.1";
+        src = pkgs.fetchFromGitHub {
+          owner = "Matoking";
+          repo = "protontricks";
+          tag = version;
+          hash = "sha256-3AS/19bhQhQjgt7a5/RDS0lvfRa6Ex8OI93e1v0pmyg=";
+        };
+        patches = builtins.filter (
+          p: !(pkgs.lib.hasSuffix "revert-vendored-vdf.patch" (toString p))
+        ) old.patches ++ [ ./patches/protontricks-appinfo-v42-trailer.patch ];
+        # Upstream's synthetic v42 fixture leaves the trailer length at 0
+        # (real Steam shards fill it in), so it can't pass with the patch.
+        disabledTests = (old.disabledTests or [ ]) ++ [ "test_parse_appinfo_v42" ];
+        postPatch = "";
+      })
+    ) { };
+  };
 
   programs.appimage.enable = true;
   programs.appimage.binfmt = true;
