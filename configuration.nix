@@ -233,6 +233,10 @@
     (pkgs.xivlauncher.overrideAttrs (old: {
       runtimeDeps = (old.runtimeDeps or [ ]) ++ [ pkgs.SDL2 ];
     }))
+    # Home Manager installs KeePassXC, but polkitd only reads actions from
+    # the system profile. Without its unlockDatabase policy here, Quick
+    # Unlock fails with a polkit error after the session locks.
+    pkgs.keepassxc
   ];
 
   # Allow unfree packages
