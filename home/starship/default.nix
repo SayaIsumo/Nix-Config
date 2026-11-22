@@ -4,7 +4,7 @@
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
-    enableBashIntegration = false;
+    enableBashIntegration = true;
     settings = {
       aws.symbol = "  ";
       buf.symbol = " ";
