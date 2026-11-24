@@ -72,6 +72,31 @@
     package = pkgs.ungoogled-chromium;
   };
 
+  # Declarative default apps. Vesktop (Electron) claimed http/https/text/html
+  # in the mutable mimeapps.list, so Steam and every other xdg-open link
+  # opened in Discord. force overwrites the old hand-edited file.
+  xdg.mimeApps =
+    let
+      browser = "chromium-browser.desktop";
+    in
+    {
+      enable = true;
+      defaultApplications = {
+        "text/html" = browser;
+        "application/xhtml+xml" = browser;
+        "x-scheme-handler/http" = browser;
+        "x-scheme-handler/https" = browser;
+        "x-scheme-handler/about" = browser;
+        "x-scheme-handler/unknown" = browser;
+        "x-scheme-handler/discord" = "vesktop.desktop";
+        "x-scheme-handler/claude" = "claude.desktop";
+        "x-scheme-handler/claude-cli" = "claude-code-url-handler.desktop";
+        "x-scheme-handler/mailto" = "userapp-Evolution-EH53X3.desktop";
+        "application/vnd.microsoft.portable-executable" = "protontricks-launch.desktop";
+      };
+    };
+  xdg.configFile."mimeapps.list".force = true;
+
   # Also links KeePassXC's native messaging manifest into
   # ~/.config/chromium/NativeMessagingHosts, so the KeePassXC-Browser
   # extension keeps finding keepassxc-proxy after every update.
