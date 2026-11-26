@@ -18,7 +18,6 @@
   home.username = "saya";
   home.homeDirectory = "/home/saya";
   home.packages = with pkgs; [
-    vesktop
     claude-code
     mangohud
     lazygit
@@ -96,6 +95,22 @@
       };
     };
   xdg.configFile."mimeapps.list".force = true;
+
+  # Only Vesktop is themed through catppuccin/nix; the rest is set up by hand.
+  catppuccin = {
+    enable = true;
+    autoEnable = false;
+    flavor = "mocha";
+    accent = "lavender";
+    vesktop.enable = true;
+  };
+
+  # mutableSettings merges the theme into settings.json, which stays writable
+  # for Vencord. Close Vesktop before rebuilding when this changes.
+  programs.vesktop = {
+    enable = true;
+    vencord.mutableSettings = true;
+  };
 
   # Also links KeePassXC's native messaging manifest into
   # ~/.config/chromium/NativeMessagingHosts, so the KeePassXC-Browser

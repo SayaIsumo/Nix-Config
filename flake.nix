@@ -11,6 +11,10 @@
       url = "github:k3d3/claude-desktop-linux-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    catppuccin = {
+      url = "github:catppuccin/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -18,6 +22,7 @@
       nixpkgs,
       home-manager,
       claude-desktop,
+      catppuccin,
       ...
     }:
     {
@@ -41,6 +46,7 @@
                   home-manager.useGlobalPkgs = true;
                   home-manager.useUserPackages = true;
                   home-manager.extraSpecialArgs = { inherit claude-desktop; };
+                  home-manager.sharedModules = [ catppuccin.homeModules.catppuccin ];
                   home-manager.users.saya = import ./home;
                 }
               ];
