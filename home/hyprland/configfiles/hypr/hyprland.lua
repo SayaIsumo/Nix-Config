@@ -31,7 +31,7 @@ hl.monitor({
 ---------------------
 
 local terminal    = "kitty"
-local browser     = "chromium"
+local browser     = "zen-beta"
 local fileManager = "thunar"
 local menu        = "rofi -show drun -theme mocha-grid"
 local scripts     = "~/.config/hypr/scripts"

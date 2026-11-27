@@ -13,6 +13,7 @@
     ./claude-desktop
     ./hyprland
     ./fastfetch
+    ./zen-browser
   ];
 
   home.username = "saya";
@@ -66,17 +67,12 @@
 
   programs.bash.enable = true;
 
-  programs.chromium = {
-    enable = true;
-    package = pkgs.ungoogled-chromium;
-  };
-
   # Declarative default apps. Vesktop (Electron) claimed http/https/text/html
   # in the mutable mimeapps.list, so Steam and every other xdg-open link
   # opened in Discord. force overwrites the old hand-edited file.
   xdg.mimeApps =
     let
-      browser = "chromium-browser.desktop";
+      browser = "zen-beta.desktop";
     in
     {
       enable = true;
@@ -112,10 +108,10 @@
     vencord.mutableSettings = true;
   };
 
-  # Also links KeePassXC's native messaging manifest into
-  # ~/.config/chromium/NativeMessagingHosts, so the KeePassXC-Browser
-  # extension keeps finding keepassxc-proxy after every update.
-  # Untick "Update native messaging manifest files at startup" in
+  # Zen's launcher links KeePassXC's native messaging manifest into
+  # ~/.mozilla/native-messaging-hosts (see home/zen-browser), so the
+  # KeePassXC-Browser extension keeps finding keepassxc-proxy after every
+  # update. Untick "Update native messaging manifest files at startup" in
   # KeePassXC's Browser Integration > Advanced, or it will complain that
   # it can't overwrite the read-only link.
   programs.keepassxc.enable = true;

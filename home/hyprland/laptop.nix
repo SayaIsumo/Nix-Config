@@ -63,7 +63,7 @@ in
 
     # dim after 5 min idle (restored on input), suspend after 30. hypridle locks
     # before sleep (before_sleep_cmd in default.nix), and apps holding an idle
-    # inhibitor (mpv, video in chromium) keep both from firing
+    # inhibitor (mpv, video in the browser) keep both from firing
     services.hypridle.settings.listener = lib.mkIf cfg.enable [
       {
         timeout = 300;

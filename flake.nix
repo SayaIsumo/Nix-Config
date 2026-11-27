@@ -15,6 +15,11 @@
       url = "github:catppuccin/nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
   outputs =
@@ -23,6 +28,7 @@
       home-manager,
       claude-desktop,
       catppuccin,
+      zen-browser,
       ...
     }:
     {
@@ -46,7 +52,10 @@
                   home-manager.useGlobalPkgs = true;
                   home-manager.useUserPackages = true;
                   home-manager.extraSpecialArgs = { inherit claude-desktop; };
-                  home-manager.sharedModules = [ catppuccin.homeModules.catppuccin ];
+                  home-manager.sharedModules = [
+                    catppuccin.homeModules.catppuccin
+                    zen-browser.homeModules.beta
+                  ];
                   home-manager.users.saya = import ./home;
                 }
               ];
