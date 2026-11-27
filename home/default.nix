@@ -13,6 +13,7 @@
     ./claude-desktop
     ./hyprland
     ./fastfetch
+    ./zen-browser
   ];
 
   home.username = "saya";
