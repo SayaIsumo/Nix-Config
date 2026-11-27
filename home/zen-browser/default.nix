@@ -1,6 +1,6 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
-# Zen Browser (trial alongside chromium, which stays the default browser).
+# Zen Browser, the default browser (see xdg.mimeApps in home/default.nix).
 # Themed with catppuccin/zen-browser's userChrome/userContent CSS; the
 # catppuccin/nix firefox module only drives Firefox Color, which Zen ignores.
 let
@@ -15,6 +15,13 @@ in
 {
   programs.zen-browser = {
     enable = true;
+    # keepassxc-proxy for KeePassXC-Browser autofill (the keepassxc HM
+    # module only wires up chromium/firefox/etc., not Zen)
+    nativeMessagingHosts = [ config.programs.keepassxc.package ];
+    policies.ExtensionSettings."keepassxc-browser@keepassxc.org" = {
+      install_url = "https://addons.mozilla.org/firefox/downloads/latest/keepassxc-browser/latest.xpi";
+      installation_mode = "normal_installed";
+    };
     profiles.default = {
       isDefault = true;
       settings = {
