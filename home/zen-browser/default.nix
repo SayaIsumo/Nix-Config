@@ -29,6 +29,10 @@ in
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         # Mocha only applies in dark mode
         "layout.css.prefers-color-scheme.content-override" = 0;
+        # mouse wheel tilt left/right = back/forward (0 none, 1 scroll,
+        # 2 history, 3 zoom; -1 = no override). Also applies to touchpad
+        # horizontal two-finger scroll.
+        "mousewheel.default.action.override_x" = 2;
       };
       userChrome = builtins.readFile "${theme}/userChrome.css";
       userContent = builtins.readFile "${theme}/userContent.css";
